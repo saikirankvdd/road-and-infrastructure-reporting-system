@@ -4,6 +4,7 @@ import { IssueCategoryCard } from '../components/IssueCategoryCard';
 import { ROAD_CATEGORIES } from '../data/categories';
 import { MOCK_REPORTS } from '../data/mockReports';
 import { getSeverityBadgeStyle, getStatusBadgeStyle } from '../utils/formatters';
+import { getImageUrl, handleImageError } from '../utils/imageUtils';
 import { 
   Camera, 
   MapPin, 
@@ -175,7 +176,7 @@ export const Home = ({ user, onStartReport, onViewReports, onSelectReport, onOpe
             >
               <div>
                 <div className="relative h-44 bg-slate-100 overflow-hidden">
-                  <img src={report.images[0]} alt={report.title} className="w-full h-full object-cover" />
+                  <img src={getImageUrl(report.images[0])} alt={report.title} onError={handleImageError} className="w-full h-full object-cover" />
                   <div className="absolute top-3 right-3">
                     <span className={`px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase border shadow-sm ${getSeverityBadgeStyle(report.severity)}`}>
                       {report.severity}

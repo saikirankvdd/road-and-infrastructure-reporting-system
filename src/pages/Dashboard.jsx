@@ -2,6 +2,7 @@ import React from 'react';
 import { Plus, FileText, CheckCircle2, Clock, ShieldAlert, ArrowRight, MapPin } from 'lucide-react';
 import { MOCK_REPORTS } from '../data/mockReports';
 import { getSeverityBadgeStyle, getStatusBadgeStyle } from '../utils/formatters';
+import { getImageUrl, handleImageError } from '../utils/imageUtils';
 
 export const Dashboard = ({ user, onStartReport, onViewReports, onSelectReport }) => {
   return (
@@ -91,8 +92,9 @@ export const Dashboard = ({ user, onStartReport, onViewReports, onSelectReport }
             >
               <div className="flex items-center space-x-4 min-w-0">
                 <img
-                  src={report.images[0]}
+                  src={getImageUrl(report.images[0])}
                   alt={report.title}
+                  onError={handleImageError}
                   className="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0"
                 />
                 <div className="min-w-0">

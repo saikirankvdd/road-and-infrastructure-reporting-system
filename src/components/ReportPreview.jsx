@@ -1,4 +1,5 @@
 import React from 'react';
+import { getImageUrl, handleImageError } from '../utils/imageUtils';
 import { 
   Building2, 
   MapPin, 
@@ -82,8 +83,9 @@ export const ReportPreview = ({
             {images.map((img, idx) => (
               <img 
                 key={idx} 
-                src={img} 
+                src={getImageUrl(img)} 
                 alt={`Road Evidence ${idx + 1}`} 
+                onError={handleImageError}
                 className="w-full h-32 rounded-xl object-cover border border-slate-200 shadow-2xs"
               />
             ))}

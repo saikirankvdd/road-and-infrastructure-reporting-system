@@ -1,4 +1,5 @@
 import React from 'react';
+import { getImageUrl, handleImageError } from '../../utils/imageUtils';
 import { 
   ArrowLeft, 
   MapPin, 
@@ -66,7 +67,7 @@ export const ReportDetails = ({ reportId, onBack, onViewSimilarMap }) => {
             
             <div className="space-y-3">
               <div className="rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200 shadow-xs">
-                <img src={report.images[0]} alt={report.title} className="w-full h-full object-cover" />
+                <img src={getImageUrl(report.images[0])} alt={report.title} onError={handleImageError} className="w-full h-full object-cover" />
               </div>
 
               {report.images.length > 1 && (
@@ -74,8 +75,9 @@ export const ReportDetails = ({ reportId, onBack, onViewSimilarMap }) => {
                   {report.images.map((img, idx) => (
                     <img 
                       key={idx} 
-                      src={img} 
+                      src={getImageUrl(img)} 
                       alt={`Evidence ${idx + 1}`} 
+                      onError={handleImageError}
                       className="w-full h-20 rounded-xl object-cover border border-slate-200 cursor-pointer"
                     />
                   ))}

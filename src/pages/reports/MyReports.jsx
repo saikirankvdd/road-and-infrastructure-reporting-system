@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Filter, Plus, MapPin, Eye, ThumbsUp, Calendar } from 'lucide-react';
 import { MOCK_REPORTS } from '../../data/mockReports';
 import { getSeverityBadgeStyle, getStatusBadgeStyle } from '../../utils/formatters';
+import { getImageUrl, handleImageError } from '../../utils/imageUtils';
 
 export const MyReports = ({ onStartReport, onSelectReport }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -82,8 +83,9 @@ export const MyReports = ({ onStartReport, onSelectReport }) => {
             >
               <div className="flex items-start space-x-4 min-w-0">
                 <img
-                  src={report.images[0]}
+                  src={getImageUrl(report.images[0])}
                   alt={report.title}
+                  onError={handleImageError}
                   className="w-24 h-24 rounded-2xl object-cover border border-slate-200 shrink-0"
                 />
 

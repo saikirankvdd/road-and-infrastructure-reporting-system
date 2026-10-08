@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Cpu, Building2, BarChart3, ArrowRight, Plus, FileText, CheckCircle2, ShieldAlert, LogIn } from 'lucide-react';
+import { getImageUrl, handleImageError } from '../utils/imageUtils';
 
 export const Hero = ({ user, onStartReport, onViewReports, onOpenLogin }) => {
   return (
@@ -81,8 +82,9 @@ export const Hero = ({ user, onStartReport, onViewReports, onOpenLogin }) => {
             <div className="relative rounded-3xl p-3 bg-slate-800/80 border border-slate-700/80 shadow-2xl backdrop-blur-sm">
               <div className="relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-950">
                 <img 
-                  src="/uppal_narapally_road.jpg" 
+                  src={getImageUrl("/uppal_narapally_road.jpg")} 
                   alt="Uppal Narapally Road Infrastructure Hazard" 
+                  onError={handleImageError}
                   className="w-full h-full object-cover opacity-85"
                 />
                 

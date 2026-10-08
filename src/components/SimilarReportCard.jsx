@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Layers, ThumbsUp, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { NEARBY_SIMILAR_REPORTS } from '../data/mockReports';
+import { getImageUrl, handleImageError } from '../utils/imageUtils';
 
 export const SimilarReportCard = ({ onViewMap }) => {
   const [reports, setReports] = useState(NEARBY_SIMILAR_REPORTS);
@@ -49,8 +50,9 @@ export const SimilarReportCard = ({ onViewMap }) => {
             >
               <div className="flex items-center space-x-3 min-w-0">
                 <img
-                  src={item.image}
+                  src={getImageUrl(item.image)}
                   alt={item.title}
+                  onError={handleImageError}
                   className="w-14 h-14 rounded-xl object-cover border border-slate-200 shrink-0"
                 />
                 <div className="min-w-0">
