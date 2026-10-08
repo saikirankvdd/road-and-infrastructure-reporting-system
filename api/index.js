@@ -133,19 +133,54 @@ app.get('/api/reports', (_req, res) => {
 });
 
 // API 4: Send OTP
-app.post('/api/auth/send-otp', (req, res) => {
-  const { email } = req.body;
+app.post('/api/auth/send-otp', async (req, res) => {
+  const { email, name = 'Citizen', isRegister = false } = req.body;
   if (!email || !email.includes('@')) {
     return res.status(400).json({ error: 'Valid email address is required' });
   }
+  const cleanEmail = email.toLowerCase().trim();
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  otpStore.set(email.toLowerCase(), { otp, expires: Date.now() + 10 * 60 * 1000 });
+  otpStore.set(cleanEmail, { otp, expires: Date.now() + 10 * 60 * 1000 });
+
+  let emailSent = false;
+  const smtpUser = process.env.GMAIL_USER || process.env.SMTP_USER;
+  const smtpPass = process.env.GMAIL_PASS || process.env.SMTP_PASS;
+
+  if (smtpUser && smtpPass) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user: smtpUser, pass: smtpPass }
+      });
+
+      await transporter.sendMail({
+        from: `"RoadWatch Verification" <${smtpUser}>`,
+        to: cleanEmail,
+        subject: `🔑 ${otp} is your RoadWatch ${isRegister ? 'Account Registration' : 'Login'} Code`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 16px;">
+            <h2 style="color: #1e293b; margin-top: 0;">RoadWatch Citizen Verification</h2>
+            <p style="color: #475569; font-size: 14px;">Hello ${name}, use the following 6-digit verification code:</p>
+            <div style="background-color: #f1f5f9; padding: 15px; text-align: center; border-radius: 12px; font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #2563eb; margin: 20px 0;">
+              ${otp}
+            </div>
+            <p style="color: #94a3b8; font-size: 12px;">This code will expire in 10 minutes.</p>
+          </div>
+        `
+      });
+      emailSent = true;
+    } catch (err) {
+      console.warn('Nodemailer SMTP warning:', err.message);
+    }
+  }
 
   res.json({
     success: true,
-    message: `Verification code generated for ${email}`,
+    message: emailSent 
+      ? `Verification code sent to ${cleanEmail}` 
+      : `Verification code generated for ${cleanEmail}`,
     devOtp: otp,
-    emailSent: false
+    emailSent
   });
 });
 
