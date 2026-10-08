@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: './',
+    base: '/road-and-infrastructure-reporting-system/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

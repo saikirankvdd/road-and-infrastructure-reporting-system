@@ -5,9 +5,10 @@ export const getImageUrl = (url) => {
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
     return url;
   }
-  // Remove leading slash so it resolves relatively to the base path (e.g. GitHub Pages repo subpath)
   const cleanPath = url.startsWith('/') ? url.slice(1) : url;
-  return `./${cleanPath}`;
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+  return `${cleanBase}${cleanPath}`;
 };
 
 export const handleImageError = (e, fallback = FALLBACK_ROAD_IMAGE) => {
