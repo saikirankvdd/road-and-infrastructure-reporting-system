@@ -1,0 +1,20 @@
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Custom Leaflet Map Pin Styles */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  padding: 4px !important;
+}
+
+.custom-map-pin {
+  background: transparent;
+  border: none;
+}

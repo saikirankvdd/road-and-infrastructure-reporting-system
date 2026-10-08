@@ -1,0 +1,6 @@
+{
+  "name": "CivicReport",
+  "description": "AI-powered civic issue reporting platform routing citizen reports to the responsible municipal authorities with real-time tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
